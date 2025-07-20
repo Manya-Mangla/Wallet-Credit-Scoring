@@ -10,7 +10,7 @@ Below is a bar chart of wallet counts in each 100-point credit score bin:
 
 Below is a bar chart of wallet counts in each 100-point credit score bin:
 
-![Score Distribution Chart](images/score_distribution.png)
+![Score Distribution Chart](credit_score_bucket_distribution.png)
 <!-- Replace the path with your actual image location if different -->
 
 ---

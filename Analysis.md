@@ -2,16 +2,9 @@
 
 ## 📈 Score Distribution
 
-Below is a bar chart of wallet counts in each 100-point credit score bin:
-
-![Score Distribution Chart](# 📊 Analysis: Wallet Credit Scores & Behavior
-
-## 📈 Score Distribution
-
-Below is a bar chart of wallet counts in each 100-point credit score bin:
+Below is a **pie chart** showing the distribution of wallets across credit score buckets:
 
 ![Score Distribution Chart](credit_score_bucket_distribution.png)
-<!-- Replace the path with your actual image location if different -->
 
 ---
 

@@ -2,7 +2,7 @@
 
 ## 📌 Overview
 
-This project delivers an end-to-end pipeline for analyzing **DeFi user wallet transactions** (from an Aave V2-like protocol), deriving **wallet-level behavioral features** from on-chain data, and assigning **robust, interpretable credit scores** and **risk class labels** to each wallet.
+This project delivers an end-to-end pipeline for analyzing **DeFi user wallet transactions** (from an Aave V2-like protocol), deriving **wallet-level behavioral features** from on-chain data, and assigning **interpretable credit scores** and **risk class labels** to each wallet.
 
 The entire process is built to be **transparent, auditable, and extensible** for future improvement or new datasets.
 

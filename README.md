@@ -1,79 +1,92 @@
-DeFi Wallet Credit Scoring
-Overview
-This project calculates a credit score for each user wallet based on their historical DeFi lending protocol activity. The scoring is completely data-driven, using features like borrow/repay behavior, speed of repayment, protocol usage diversity, and other transaction patterns. The main goal is to flag which wallets are most trustworthy and which may pose credit or protocol risk.
+# 🏦 DeFi Wallet Credit Scoring
 
-Data Source
-JSON file of DeFi protocol transactions (Aave v2 format).
+## 🔍 Overview
 
-Key data fields: wallet address, timestamp, action (deposit, borrow, repay, etc.), token symbol, amount, and USD price.
+This project calculates a **credit score for each user wallet** based on their historical activity on a DeFi lending protocol (Aave v2).  
+The scoring is **completely data-driven**, using behavior such as:
 
-Processing & Modeling Pipeline
-Data Loading & Cleaning
+- Borrow/repay history
+- Speed of repayment
+- Protocol usage diversity
+- Other transaction patterns
 
-Flatten the nested JSON to tabular format.
+### 🎯 Goal
+To **flag wallets** based on risk:
+- Identify trustworthy participants
+- Detect wallets that may pose **credit** or **protocol risk**
 
-Standardize token amounts, correcting for decimals.
+---
 
-Remove malformed, incomplete, or blank asset transactions.
+## 📁 Data Source
 
-Feature Engineering
+- **Format:** JSON (Aave v2 protocol transaction history)
+- **Key fields:**
+  - `wallet_address`
+  - `timestamp`
+  - `action` (e.g., deposit, borrow, repay, redeem)
+  - `token_symbol`
+  - `amount`
+  - `usd_price`
 
-Aggregate wallet-level totals: deposits, borrows, repays, redeems.
+---
 
-Compute behavioral metrics:
+## 🛠️ Processing & Modeling Pipeline
 
-Repayment ratio (total repaid / total borrowed)
+### 1. 🧼 Data Loading & Cleaning
+- Flatten nested JSON into a tabular format
+- Standardize token amounts (correct for decimals)
+- Remove malformed, incomplete, or blank transactions
 
-Repayment delay (days from first borrow to first repay)
+### 2. 🧮 Feature Engineering
+- **Aggregate wallet-level totals:**
+  - Deposits, Borrows, Repays, Redeems
+- **Behavioral metrics:**
+  - Repayment ratio = total repaid / total borrowed
+  - Repayment delay = days between first borrow and first repay
+  - Number of each action type
+  - Number of unique tokens interacted with
+  - Total transaction count
+  - Protocol usage diversity
+  - Asset mismatch indicator (borrowed vs repaid tokens)
+  - Activity span = total active days on protocol
 
-Number of each action type
+### 3. 📊 Credit Scoring
+- All wallets start at **1000 points**
+- **Point deductions for:**
+  - Late/partial/non-repayments
+  - Asset mismatch
+  - Bot-like behavior
+- **Point additions for:**
+  - Timely & full repayments
+  - Long activity span
+  - High token/protocol usage diversity
 
-Number of unique tokens interacted with
+#### 🧷 Final Score Ranges
+| Score Range | Credit Class |
+|-------------|--------------|
+| 900–1000    | Prime (AAA)  |
+| 800–899     | Strong       |
+| 700–799     | Moderate     |
+| 600–699     | Fair         |
+| 400–599     | Weak         |
+| 200–399     | High Risk    |
+| 0–199       | Critical     |
 
-Transaction count and protocol usage diversity
+---
 
-Asset mismatch indicator (if borrowed and repaid with different tokens)
+## 📤 Export & Reporting
 
-Activity span (days active on protocol)
+- Results saved to: `wallet_credit_scores.csv`
+  - Includes all features, final credit score, and classification
+- Visualizations provided to:
+  - Analyze score distribution
+  - Understand wallet behavior by credit class
 
-Credit Scoring
+---
 
-Start all wallets at 1000 points.
+## 🚀 How to Use
 
-Subtract points for late, partial, or non-repayment, asset mismatch, or bot-like behaviors.
-
-Add points for timely/full repayments, usage diversity, or long activity span.
-
-Final scores are between 0—1000, then mapped to classes:
-
-Prime (AAA): 900–1000
-
-Strong: 800–899
-
-Moderate: 700–799
-
-Fair: 600–699
-
-Weak: 400–599
-
-High Risk: 200–399
-
-Critical: 0–199
-
-Export & Reporting
-
-Results saved to wallet_credit_scores.csv with all features, final score, and label.
-
-Visualizations summarize score distribution and behavior by score class.
-
-How to Use
-Place your input transaction file in the data/ directory.
-
-Run the main notebook or script (wallet_credit_score.py).
-
-Review the output CSV and use the provided visualization code for analysis.
-
-Customization & Extensions
-You can adjust score logic or asset decimal mappings as needed.
-
-For improved accuracy, the model can be extended with supervised machine learning (if you have labeled outcomes), anomaly detection, or time-series features typical in industry deployment.
+1. Place your input transaction file in the `data/` directory.
+2. Run the main script or notebook:
+   ```bash
+   python wallet_credit_score.py
